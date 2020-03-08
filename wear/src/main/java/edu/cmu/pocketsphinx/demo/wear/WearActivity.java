@@ -33,6 +33,7 @@ public class WearActivity extends Activity implements
     private static final String DIGITS_SEARCH = "digits";
     private static final String PHONE_SEARCH = "phones";
     private static final String MENU_SEARCH = "menu";
+    private String CURRENT_STATE = "wakeup";
 
     /* Keyword we are looking for to activate menu */
     private static final String KEYPHRASE = "start";
@@ -133,20 +134,27 @@ public class WearActivity extends Activity implements
             return;
 
         String text = hypothesis.getHypstr();
-        if (text.equals(KEYPHRASE))
+        if (text.equals(KEYPHRASE)){
             switchSearch("scene1");
-        else if (cosineSimilarity(text, "may i get a tea") > 0.7)
+            this.CURRENT_STATE = "scene1";}
+        else if (cosineSimilarity(text, "may i get a tea") > 0.7){
             switchSearch("scene2");
-        else if (cosineSimilarity(text, "can i have a coffee") > 0.7)
+            this.CURRENT_STATE = "scene2";}
+        else if (cosineSimilarity(text, "can i have a coffee") > 0.7){
             switchSearch("scene3");
-        else if (cosineSimilarity(text, "sugar please") > 0.7)
+            this.CURRENT_STATE = "scene3";}
+        else if (cosineSimilarity(text, "sugar please") > 0.7){
             switchSearch("scene4");
-        else if (cosineSimilarity(text, "i would like cream please") > 0.7)
+            this.CURRENT_STATE = "scene4";}
+        else if (cosineSimilarity(text, "i would like cream please") > 0.7){
             switchSearch("scene4");
-        else if (cosineSimilarity(text, "i will be paying with card") > 0.7)
+            this.CURRENT_STATE = "scene4";}
+        else if (cosineSimilarity(text, "i will be paying with card") > 0.7){
             switchSearch("scene5");
-        else if (cosineSimilarity(text, "i will be paying with cash") > 0.7)
+            this.CURRENT_STATE = "scene5";}
+        else if (cosineSimilarity(text, "i will be paying with cash") > 0.7){
             switchSearch("scene6");
+            this.CURRENT_STATE = "scene6";}
         else
             ((TextView) findViewById(R.id.result_text)).setText(text);
     }
@@ -172,8 +180,8 @@ public class WearActivity extends Activity implements
      */
     @Override
     public void onEndOfSpeech() {
-        if (!recognizer.getSearchName().equals(KWS_SEARCH))
-            switchSearch(KWS_SEARCH);
+        if (!recognizer.getSearchName().equals(CURRENT_STATE))
+            switchSearch(CURRENT_STATE);
     }
 
     private void switchSearch(String searchName) {
@@ -239,6 +247,7 @@ public class WearActivity extends Activity implements
     @Override
     public void onTimeout() {
         switchSearch(KWS_SEARCH);
+        this.CURRENT_STATE = KWS_SEARCH;
     }
 
     public static Map<String, Integer> getTermFrequencyMap(String[] terms) {
