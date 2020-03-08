@@ -51,4 +51,4 @@ grammar coffee;
           bored |
           sword;
 
-public <item> = <item>+;
+public <coffee> = <item>+;
