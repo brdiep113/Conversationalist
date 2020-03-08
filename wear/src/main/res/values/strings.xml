@@ -8,4 +8,17 @@
     <string name="digits_caption">To try recognition of digits: say something like \"one two three four five\".</string>
     <string name="forecast_caption">To try recognition of a weather forecast like \"sunny spells on Wednesday\".</string>
     <string name="phone_caption">To try phonetic recognition say anything.</string>
+
+    <string name="scene1"> Hi, welcome to Starbucks, how may I take your order? \n 1. May I get a
+        tea? \n 2. Can I have a coffee?</string>
+    <string name="scene2">Sure! Would you like green tea or black tea? \n 1. I would like green tea.
+        \n 2. I would like black tea.</string>
+    <string name="scene3">Sure! Would you like sugar or cream with your coffee? \n 1. Sugar, please.
+        \n 2. I would like cream please.</string>
+    <string name="scene4">Sure thing! That will be $2.75. Will you be paying with card or cash
+        today? \n 1. I will be paying with card. \n 2. I will be paying with cash.</string>
+    <string name="scene5">Alright! You can tap when the machine is ready.
+        \n 1. Thank you for the drink</string>
+    <string name="scene6">Cash? Alright, thanks! \n 1. Thank you for the drink.</string>
+    <string name="scene7">Goodbye!</string>
 </resources>
