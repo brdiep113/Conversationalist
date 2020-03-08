@@ -49,6 +49,6 @@ grammar coffee;
           slash |
           cord |
           bored |
-          sword |;
+          sword ;
 
 public <item> = <item>+;
