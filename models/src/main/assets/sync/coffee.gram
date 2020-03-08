@@ -5,6 +5,9 @@ grammar coffee;
 <item> =  may |
           i |
           get  |
+          bet |
+          set |
+          let |
           a   |
           tea |
           can  |
@@ -13,21 +16,39 @@ grammar coffee;
           will |
           hey |
           bay |
+          say |
+          lay |
+          pay |
           wet |
           like |
           bike |
           hike |
           green |
           black |
+          sack |
+          back |
           sugar |
           please |
+          lease |
           cream |
+          beam |
+          seam |
+          seem |
           and |
+          band |
+          sand |
+          land |
           with |
           paying |
+          saying |
+          playing |
           card |
           cash |
           clash |
-          cord |;
+          bash |
+          slash |
+          cord |
+          bored |
+          sword |;
 
 public <item> = <item>+;
