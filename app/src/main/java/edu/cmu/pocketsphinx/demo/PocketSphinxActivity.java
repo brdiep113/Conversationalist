@@ -231,7 +231,7 @@ public class PocketSphinxActivity extends Activity implements
          */
 
         // Create keyword-activation search.
-        recognizer.addKeyphraseSearch(KWS_SEARCH, KEYPHRASE);
+        recognizer.addKeyphraseSearch(KWS_SEARCH, "menu.gram");
 
         File coffeeGrammar = new File(assetsDir, "coffee.gram");
         for (int i = 1; i < 8; i++){
