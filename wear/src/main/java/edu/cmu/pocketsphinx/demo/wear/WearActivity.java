@@ -213,6 +213,11 @@ public class WearActivity extends Activity implements
         // Phonetic search
         File phoneticModel = new File(assetsDir, "en-phone.dmp");
         recognizer.addAllphoneSearch(PHONE_SEARCH, phoneticModel);
+
+        File coffeeGrammar = new File(assetsDir, "coffee.gram");
+        for (int i = 1; i < 8; i++){
+            recognizer.addGrammarSearch("scene" + i, coffeeGrammar);
+        }
     }
 
     @Override
