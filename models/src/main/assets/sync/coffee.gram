@@ -1,0 +1,33 @@
+#JSGF V1.0;
+
+grammar coffee;
+
+<item> =  may |
+          i |
+          get  |
+          a   |
+          tea |
+          can  |
+          have  |
+          coffee  |
+          will |
+          hey |
+          bay |
+          wet |
+          like |
+          bike |
+          hike |
+          green |
+          black |
+          sugar |
+          please |
+          cream |
+          and |
+          with |
+          paying |
+          card |
+          cash |
+          clash |
+          cord |;
+
+public <item> = <item>+;
