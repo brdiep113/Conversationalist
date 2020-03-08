@@ -223,7 +223,7 @@ public class WearActivity extends Activity implements
         File phoneticModel = new File(assetsDir, "en-phone.dmp");
         recognizer.addAllphoneSearch(PHONE_SEARCH, phoneticModel);
 
-        File coffeeGrammar = new File(assetsDir, "coffee.gram");
+        File coffeeGrammar = new File(assetsDir, "coffee2.gram");
         for (int i = 1; i < 8; i++){
             recognizer.addGrammarSearch("scene" + i, coffeeGrammar);
         }
