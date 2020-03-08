@@ -48,10 +48,13 @@ public class WearActivity extends Activity implements
         // Prepare the data for UI
         captions = new HashMap<String, Integer>();
         captions.put(KWS_SEARCH, R.string.kws_caption);
-        captions.put(MENU_SEARCH, R.string.menu_caption);
-        captions.put(DIGITS_SEARCH, R.string.digits_caption);
-        captions.put(PHONE_SEARCH, R.string.phone_caption);
-        captions.put(FORECAST_SEARCH, R.string.forecast_caption);
+        captions.put("scene1", R.string.scene1);
+        captions.put("scene2", R.string.scene2);
+        captions.put("scene3", R.string.scene3);
+        captions.put("scene4", R.string.scene4);
+        captions.put("scene5", R.string.scene5);
+        captions.put("scene6", R.string.scene6);
+        captions.put("scene7", R.string.scene7);
         setContentView(R.layout.activity_main);
         ((TextView) findViewById(edu.cmu.pocketsphinx.demo.wear.R.id.caption_text))
                 .setText("Preparing the recognizer");
