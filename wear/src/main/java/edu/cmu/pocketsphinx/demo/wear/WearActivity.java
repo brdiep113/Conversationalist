@@ -135,24 +135,27 @@ public class WearActivity extends Activity implements
         if (text.equals(KEYPHRASE)){
             switchSearch("scene1");
             this.currentState = "scene1";}
-        else if (cosineSimilarity(text, "may i get a tea") > 0.7){
+        else if (cosineSimilarity(text, "may i get a tea") > 0.65){
             switchSearch("scene2");
             this.currentState = "scene2";}
-        else if (cosineSimilarity(text, "can i have a coffee") > 0.7){
+        else if (cosineSimilarity(text, "can i have a coffee") > 0.65){
             switchSearch("scene3");
             this.currentState = "scene3";}
-        else if (cosineSimilarity(text, "sugar please") > 0.7){
+        else if (cosineSimilarity(text, "sugar please") > 0.65){
             switchSearch("scene4");
             this.currentState = "scene4";}
-        else if (cosineSimilarity(text, "i would like cream please") > 0.7){
+        else if (cosineSimilarity(text, "i would like cream please") > 0.65){
             switchSearch("scene4");
             this.currentState = "scene4";}
-        else if (cosineSimilarity(text, "i will be paying with card") > 0.7){
+        else if (cosineSimilarity(text, "i will be paying with card") > 0.65){
             switchSearch("scene5");
             this.currentState = "scene5";}
-        else if (cosineSimilarity(text, "i will be paying with cash") > 0.7){
+        else if (cosineSimilarity(text, "i will be paying with cash") > 0.65){
             switchSearch("scene6");
             this.currentState = "scene6";}
+        else if (cosineSimilarity(text, "end") > 0.65) {
+            this.currentState = KWS_SEARCH;
+        }
         else
             ((TextView) findViewById(R.id.result_text)).setText(text);
 
