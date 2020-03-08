@@ -39,6 +39,8 @@ public class WearActivity extends Activity implements
     private SpeechRecognizer recognizer;
     private HashMap<String, Integer> captions;
 
+    private String currentState = KWS_SEARCH;
+
     @Override
     public void onCreate(Bundle state) {
         super.onCreate(state);
@@ -129,20 +131,27 @@ public class WearActivity extends Activity implements
             return;
 
         String text = hypothesis.getHypstr();
-        if (text.equals(KEYPHRASE))
+        if (text.equals(KEYPHRASE)){
             switchSearch("scene1");
-        else if (cosineSimilarity(text, "may i get a tea") > 0.7)
+            this.currentState = "scene1";}
+        else if (cosineSimilarity(text, "may i get a tea") > 0.7){
             switchSearch("scene2");
-        else if (cosineSimilarity(text, "can i have a coffee") > 0.7)
+            this.currentState = "scene2";}
+        else if (cosineSimilarity(text, "can i have a coffee") > 0.7){
             switchSearch("scene3");
-        else if (cosineSimilarity(text, "sugar please") > 0.7)
+            this.currentState = "scene3";}
+        else if (cosineSimilarity(text, "sugar please") > 0.7){
             switchSearch("scene4");
-        else if (cosineSimilarity(text, "i would like cream please") > 0.7)
+            this.currentState = "scene4";}
+        else if (cosineSimilarity(text, "i would like cream please") > 0.7){
             switchSearch("scene4");
-        else if (cosineSimilarity(text, "i will be paying with card") > 0.7)
+            this.currentState = "scene4";}
+        else if (cosineSimilarity(text, "i will be paying with card") > 0.7){
             switchSearch("scene5");
-        else if (cosineSimilarity(text, "i will be paying with cash") > 0.7)
+            this.currentState = "scene5";}
+        else if (cosineSimilarity(text, "i will be paying with cash") > 0.7){
             switchSearch("scene6");
+            this.currentState = "scene6";}
         else
             ((TextView) findViewById(R.id.result_text)).setText(text);
     }
@@ -168,8 +177,8 @@ public class WearActivity extends Activity implements
      */
     @Override
     public void onEndOfSpeech() {
-        if (!recognizer.getSearchName().equals(KWS_SEARCH))
-            switchSearch(KWS_SEARCH);
+        if (!recognizer.getSearchName().equals(currentState))
+            switchSearch(currentState);
     }
 
     private void switchSearch(String searchName) {
@@ -219,6 +228,7 @@ public class WearActivity extends Activity implements
     @Override
     public void onTimeout() {
         switchSearch(KWS_SEARCH);
+        currentState = KWS_SEARCH;
     }
 
     public static Map<String, Integer> getTermFrequencyMap(String[] terms) {
