@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import edu.cmu.pocketsphinx.Assets;
 import edu.cmu.pocketsphinx.Hypothesis;
@@ -39,7 +40,7 @@ public class WearActivity extends Activity implements
     private SpeechRecognizer recognizer;
     private HashMap<String, Integer> captions;
 
-    private String currentState = KWS_SEARCH;
+    private String currentState = "wakeup";
 
     @Override
     public void onCreate(Bundle state) {
@@ -131,7 +132,7 @@ public class WearActivity extends Activity implements
             return;
 
         String text = hypothesis.getHypstr();
-        if (text.equals(KEYPHRASE)){
+        /**if (text.equals(KEYPHRASE)){
             switchSearch("scene1");
             this.currentState = "scene1";}
         else if (cosineSimilarity(text, "may i get a tea") > 0.7){
@@ -154,6 +155,54 @@ public class WearActivity extends Activity implements
             this.currentState = "scene6";}
         else
             ((TextView) findViewById(R.id.result_text)).setText(text);
+        **/
+        switch (currentState){
+            case KWS_SEARCH: if (text.equals(KEYPHRASE)){
+                this.currentState = "scene1";
+                switchSearch("scene1");
+            }
+            case "scene1":  if (cosineSimilarity(text, "may i get a tea") > 0.7){
+                this.currentState = "scene2";
+                switchSearch("scene2");
+            }else if (cosineSimilarity(text, "can i have a coffee") > 0.7){
+                this.currentState = "scene3";
+                switchSearch("scene3");
+            }
+            case "scene2":  if (cosineSimilarity(text, "i would like green tea") > 0.7){
+                this.currentState = "scene4";
+                switchSearch("scene4");
+            }else if (cosineSimilarity(text,"i would like black tea") > 0.7){
+                this.currentState = "scene4";
+                switchSearch("scene4");
+            }
+            case "scene3":  if (cosineSimilarity(text, "sugar please") > 0.7){
+                this.currentState = "scene4";
+                switchSearch("scene4");
+            }else if (cosineSimilarity(text, "i would like cream please") > 0.7){
+                this.currentState = "scene4";
+                switchSearch("scene4");
+            }
+            case "scene4":  if (cosineSimilarity(text, "i will be paying with card") > 0.7){
+                this.currentState = "scene5";
+                switchSearch("scene5");
+            }else if (cosineSimilarity(text, "i will be paying with cash") > 0.7){
+                this.currentState = "scene6";
+                switchSearch("scene6");
+            }
+            case "scene5":  if (cosineSimilarity(text, "thank you for the drink") > 0.7){
+                this.currentState = "scene7";
+                switchSearch("scene7");
+            }
+            case "scene6":  if (cosineSimilarity(text, "thank you for the drink") > 0.7){
+                this.currentState = "scene7";
+                switchSearch("scene7");
+            }
+            case "scene7": this.currentState = KWS_SEARCH;
+                            switchSearch(KWS_SEARCH);
+            default: switchSearch(currentState);
+
+
+        }
     }
 
     /**
@@ -177,8 +226,8 @@ public class WearActivity extends Activity implements
      */
     @Override
     public void onEndOfSpeech() {
-        if (!recognizer.getSearchName().equals(currentState))
-            switchSearch(currentState);
+        if (!recognizer.getSearchName().equals(KWS_SEARCH))
+            switchSearch(KWS_SEARCH);
     }
 
     private void switchSearch(String searchName) {
