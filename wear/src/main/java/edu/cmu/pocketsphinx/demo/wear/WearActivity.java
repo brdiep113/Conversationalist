@@ -129,13 +129,19 @@ public class WearActivity extends Activity implements
 
         String text = hypothesis.getHypstr();
         if (text.equals(KEYPHRASE))
-            switchSearch(MENU_SEARCH);
-        else if (text.equals(DIGITS_SEARCH))
-            switchSearch(DIGITS_SEARCH);
-        else if (text.equals(PHONE_SEARCH))
-            switchSearch(PHONE_SEARCH);
-        else if (text.equals(FORECAST_SEARCH))
-            switchSearch(FORECAST_SEARCH);
+            switchSearch("scene1");
+        else if (text.equals("may i get a tea"))
+            switchSearch("scene2");
+        else if (text.equals("can i have a coffee"))
+            switchSearch("scene3");
+        else if (text.equals("sugar please"))
+            switchSearch("scene4");
+        else if (text.equals("i would like cream please"))
+            switchSearch("scene4");
+        else if (text.equals("i will be paying with card"))
+            switchSearch("scene5");
+        else if (text.equals("i will be paying with cash"))
+            switchSearch("scene6");
         else
             ((TextView) findViewById(R.id.result_text)).setText(text);
     }
