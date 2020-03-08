@@ -13,6 +13,8 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 
 import edu.cmu.pocketsphinx.Assets;
 import edu.cmu.pocketsphinx.Hypothesis;
@@ -133,17 +135,17 @@ public class WearActivity extends Activity implements
         String text = hypothesis.getHypstr();
         if (text.equals(KEYPHRASE))
             switchSearch("scene1");
-        else if (text.equals("may i get a tea"))
+        else if (cosineSimilarity(text, "may i get a tea") > 0.7)
             switchSearch("scene2");
-        else if (text.equals("can i have a coffee"))
+        else if (cosineSimilarity(text, "can i have a coffee") > 0.7)
             switchSearch("scene3");
-        else if (text.equals("sugar please"))
+        else if (cosineSimilarity(text, "sugar please") > 0.7)
             switchSearch("scene4");
-        else if (text.equals("i would like cream please"))
+        else if (cosineSimilarity(text, "i would like cream please") > 0.7)
             switchSearch("scene4");
-        else if (text.equals("i will be paying with card"))
+        else if (cosineSimilarity(text, "i will be paying with card") > 0.7)
             switchSearch("scene5");
-        else if (text.equals("i will be paying with cash"))
+        else if (cosineSimilarity(text, "i will be paying with cash") > 0.7)
             switchSearch("scene6");
         else
             ((TextView) findViewById(R.id.result_text)).setText(text);
@@ -224,7 +226,7 @@ public class WearActivity extends Activity implements
         recognizer.addAllphoneSearch(PHONE_SEARCH, phoneticModel);
 
         File coffeeGrammar = new File(assetsDir, "coffee.gram");
-        for (int i = 1; i < 8; i++){
+        for (int i = 1; i < 8; i++) {
             recognizer.addGrammarSearch("scene" + i, coffeeGrammar);
         }
     }
@@ -237,5 +239,50 @@ public class WearActivity extends Activity implements
     @Override
     public void onTimeout() {
         switchSearch(KWS_SEARCH);
+    }
+
+    public static Map<String, Integer> getTermFrequencyMap(String[] terms) {
+        Map<String, Integer> termFrequencyMap = new HashMap<>();
+        for (String term : terms) {
+            Integer n = termFrequencyMap.get(term);
+            n = (n == null) ? 1 : ++n;
+            termFrequencyMap.put(term, n);
+        }
+        return termFrequencyMap;
+    }
+
+    /**
+     * @param text1
+     * @param text2
+     * @return cosine similarity of text1 and text2
+     */
+    public static double cosineSimilarity(String text1, String text2) {
+        //Get vectors
+        Map<String, Integer> a = getTermFrequencyMap(text1.split("\\W+"));
+        Map<String, Integer> b = getTermFrequencyMap(text2.split("\\W+"));
+
+        //Get unique words from both sequences
+        HashSet<String> intersection = new HashSet<>(a.keySet());
+        intersection.retainAll(b.keySet());
+
+        double dotProduct = 0, magnitudeA = 0, magnitudeB = 0;
+
+        //Calculate dot product
+        for (String item : intersection) {
+            dotProduct += a.get(item) * b.get(item);
+        }
+
+        //Calculate magnitude a
+        for (String k : a.keySet()) {
+            magnitudeA += Math.pow(a.get(k), 2);
+        }
+
+        //Calculate magnitude b
+        for (String k : b.keySet()) {
+            magnitudeB += Math.pow(b.get(k), 2);
+        }
+
+        //return cosine similarity
+        return dotProduct / Math.sqrt(magnitudeA * magnitudeB);
     }
 }
