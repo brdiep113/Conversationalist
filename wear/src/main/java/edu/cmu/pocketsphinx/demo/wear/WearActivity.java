@@ -29,11 +29,6 @@ public class WearActivity extends Activity implements
 
     /* Named searches allow to quickly reconfigure the decoder */
     private static final String KWS_SEARCH = "wakeup";
-    private static final String FORECAST_SEARCH = "forecast";
-    private static final String DIGITS_SEARCH = "digits";
-    private static final String PHONE_SEARCH = "phones";
-    private static final String MENU_SEARCH = "menu";
-    private String CURRENT_STATE = "wakeup";
 
     /* Keyword we are looking for to activate menu */
     private static final String KEYPHRASE = "start";
@@ -134,27 +129,20 @@ public class WearActivity extends Activity implements
             return;
 
         String text = hypothesis.getHypstr();
-        if (text.equals(KEYPHRASE)){
+        if (text.equals(KEYPHRASE))
             switchSearch("scene1");
-            this.CURRENT_STATE = "scene1";}
-        else if (cosineSimilarity(text, "may i get a tea") > 0.7){
+        else if (cosineSimilarity(text, "may i get a tea") > 0.7)
             switchSearch("scene2");
-            this.CURRENT_STATE = "scene2";}
-        else if (cosineSimilarity(text, "can i have a coffee") > 0.7){
+        else if (cosineSimilarity(text, "can i have a coffee") > 0.7)
             switchSearch("scene3");
-            this.CURRENT_STATE = "scene3";}
-        else if (cosineSimilarity(text, "sugar please") > 0.7){
+        else if (cosineSimilarity(text, "sugar please") > 0.7)
             switchSearch("scene4");
-            this.CURRENT_STATE = "scene4";}
-        else if (cosineSimilarity(text, "i would like cream please") > 0.7){
+        else if (cosineSimilarity(text, "i would like cream please") > 0.7)
             switchSearch("scene4");
-            this.CURRENT_STATE = "scene4";}
-        else if (cosineSimilarity(text, "i will be paying with card") > 0.7){
+        else if (cosineSimilarity(text, "i will be paying with card") > 0.7)
             switchSearch("scene5");
-            this.CURRENT_STATE = "scene5";}
-        else if (cosineSimilarity(text, "i will be paying with cash") > 0.7){
+        else if (cosineSimilarity(text, "i will be paying with cash") > 0.7)
             switchSearch("scene6");
-            this.CURRENT_STATE = "scene6";}
         else
             ((TextView) findViewById(R.id.result_text)).setText(text);
     }
@@ -180,8 +168,8 @@ public class WearActivity extends Activity implements
      */
     @Override
     public void onEndOfSpeech() {
-        if (!recognizer.getSearchName().equals(CURRENT_STATE))
-            switchSearch(CURRENT_STATE);
+        if (!recognizer.getSearchName().equals(KWS_SEARCH))
+            switchSearch(KWS_SEARCH);
     }
 
     private void switchSearch(String searchName) {
@@ -217,22 +205,6 @@ public class WearActivity extends Activity implements
         // Create keyword-activation search.
         recognizer.addKeyphraseSearch(KWS_SEARCH, KEYPHRASE);
 
-        // Create grammar-based search for selection between demos
-        File menuGrammar = new File(assetsDir, "menu.gram");
-        recognizer.addGrammarSearch(MENU_SEARCH, menuGrammar);
-
-        // Create grammar-based search for digit recognition
-        File digitsGrammar = new File(assetsDir, "digits.gram");
-        recognizer.addGrammarSearch(DIGITS_SEARCH, digitsGrammar);
-
-        // Create language model search
-        File languageModel = new File(assetsDir, "weather.dmp");
-        recognizer.addNgramSearch(FORECAST_SEARCH, languageModel);
-
-        // Phonetic search
-        File phoneticModel = new File(assetsDir, "en-phone.dmp");
-        recognizer.addAllphoneSearch(PHONE_SEARCH, phoneticModel);
-
         File coffeeGrammar = new File(assetsDir, "coffee.gram");
         for (int i = 1; i < 8; i++) {
             recognizer.addGrammarSearch("scene" + i, coffeeGrammar);
@@ -247,7 +219,6 @@ public class WearActivity extends Activity implements
     @Override
     public void onTimeout() {
         switchSearch(KWS_SEARCH);
-        this.CURRENT_STATE = KWS_SEARCH;
     }
 
     public static Map<String, Integer> getTermFrequencyMap(String[] terms) {
