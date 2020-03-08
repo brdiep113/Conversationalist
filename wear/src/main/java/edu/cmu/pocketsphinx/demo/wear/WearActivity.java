@@ -225,13 +225,8 @@ public class WearActivity extends Activity implements
         File phoneticModel = new File(assetsDir, "en-phone.dmp");
         recognizer.addAllphoneSearch(PHONE_SEARCH, phoneticModel);
 
-<<<<<<< HEAD
-        File coffeeGrammar = new File(assetsDir, "coffee2.gram");
-        for (int i = 1; i < 8; i++){
-=======
         File coffeeGrammar = new File(assetsDir, "coffee.gram");
         for (int i = 1; i < 8; i++) {
->>>>>>> ea3abeb1bbca95be06260a3409796d018b9a0519
             recognizer.addGrammarSearch("scene" + i, coffeeGrammar);
         }
     }
