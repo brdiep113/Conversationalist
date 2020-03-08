@@ -40,7 +40,7 @@ public class WearActivity extends Activity implements
     private SpeechRecognizer recognizer;
     private HashMap<String, Integer> captions;
 
-    private String currentState = "wakeup";
+    private String currentState = KWS_SEARCH;
 
     @Override
     public void onCreate(Bundle state) {
@@ -132,7 +132,7 @@ public class WearActivity extends Activity implements
             return;
 
         String text = hypothesis.getHypstr();
-        /**if (text.equals(KEYPHRASE)){
+        if (text.equals(KEYPHRASE)){
             switchSearch("scene1");
             this.currentState = "scene1";}
         else if (cosineSimilarity(text, "may i get a tea") > 0.7){
@@ -155,8 +155,9 @@ public class WearActivity extends Activity implements
             this.currentState = "scene6";}
         else
             ((TextView) findViewById(R.id.result_text)).setText(text);
-        **/
-        switch (currentState){
+
+        /**
+         * switch (currentState){
             case KWS_SEARCH: if (text.equals(KEYPHRASE)){
                 this.currentState = "scene1";
                 switchSearch("scene1");
@@ -199,11 +200,12 @@ public class WearActivity extends Activity implements
             }
             case "scene7": this.currentState = KWS_SEARCH;
                             switchSearch(KWS_SEARCH);
-            default: switchSearch(currentState);
+            default:    switchSearch(currentState);
+                        this.currentState = KWS_SEARCH;
+            **/
 
-
-        }
     }
+
 
     /**
      * This callback is called when we stop the recognizer.
